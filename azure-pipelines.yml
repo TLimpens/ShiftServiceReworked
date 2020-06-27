@@ -1,0 +1,30 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  imageName: 'tlimpensshiftservicereworked'
+  dockerfile: 'S6ShiftService_Reworked/Dockerfile'
+  containerRegistry: 's6containerregistry.azurecr.io'
+
+steps:
+- task: Docker@2
+  displayName: Build and push an image to container registry
+  inputs: 
+    command: buildAndPush
+    repository: $(imageName)
+    buildContext: '$(Build.Repository.LocalPath)'
+    Dockerfile: $(dockerfile)
+    containerRegistry: $(containerRegistry)
+
+- task: CopyFiles@2
+  inputs:
+    sourceFolder: $(Build.SourcesDirectory)
+    targetFolder: $(Build.ArtifactStagingDirectory)
+    
+- task: PublishBuildArtifacts@1    
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
