@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  imageName: 'tlimpensshiftservicereworked'
+  imageName: 'ShiftServiceReworkedimage'
   dockerfile: 'S6ShiftService_Reworked/Dockerfile'
   containerRegistry: 's6containerregistry.azurecr.io'
 
